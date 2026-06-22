@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>검수 — 화성시 농업직불금 자동화 시스템</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      body {
+        overflow: hidden;
+      }
+      .review-top-bar {
+        background: var(--white);
+        border-bottom: 1px solid var(--gray-200);
+        padding: 8px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        height: 48px;
+        flex-shrink: 0;
+      }
+      .review-top-bar .back-btn {
+        color: var(--gray-500);
+        text-decoration: none;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .review-top-bar .back-btn:hover {
+        color: var(--primary);
+      }
+      .review-top-bar .app-id {
+        font-size: 12px;
+        color: var(--gray-400);
+      }
+      .review-top-bar .shortcuts {
+        margin-left: auto;
+        font-size: 11px;
+        color: var(--gray-400);
+      }
+      .shortcut-key {
+        display: inline-block;
+        background: var(--gray-100);
+        border: 1px solid var(--gray-300);
+        border-radius: 4px;
+        padding: 1px 6px;
+        font-size: 11px;
+        font-family: monospace;
+      }
+      .full-layout {
+        display: flex;
+        flex-direction: column;
+        height: calc(100vh - 48px);
+        padding: 0 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 상단 바 -->
+    <div class="review-top-bar">
+      <a href="dashboard.html" class="back-btn">← 대시보드</a>
+      <span style="color: var(--gray-300)">|</span>
+      <span class="app-id" id="top-app-id"></span>
+      <div class="shortcuts">
+        <span class="shortcut-key">Tab</span> 다음 필드 &nbsp;
+        <span class="shortcut-key">Space</span> 확인 체크 &nbsp;
+        <span class="shortcut-key">Ctrl+Enter</span> 저장 후 다음
+      </div>
+    </div>
+
+    <div class="full-layout">
+      <div class="review-layout">
+        <!-- 좌측: 원본 이미지 -->
+        <div class="image-panel">
+          <div class="image-panel-header">
+            <span>📄 원본 이미지</span>
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-left: 16px;
+              "
+            >
+              <button
+                id="btn-prev-page"
+                class="page-nav-btn"
+                onclick="changePage(0)"
+                title="1장 보기"
+              >
+                ◀ 1장
+              </button>
+              <span
+                id="page-indicator"
+                style="font-size: 11px; color: var(--gray-400)"
+                >1 / 2</span
+              >
+              <button
+                id="btn-next-page"
+                class="page-nav-btn"
+                onclick="changePage(1)"
+                title="2장 보기"
+              >
+                2장 ▶
+              </button>
+            </div>
+            <span
+              id="filename-label"
+              style="margin-left: auto; font-size: 11px; color: var(--gray-400)"
+            ></span>
+          </div>
+          <div class="image-scroll">
+            <!-- 실제 이미지: 원본 화질 그대로 표시 -->
+            <img
+              id="form-img"
+              alt="원본 신청서"
+              style="
+                display: none;
+                width: 100%;
+                height: auto;
+                border-radius: 4px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+              "
+            />
+            <!-- 목 모드 or 크롭 툴팁용 오프스크린 캔버스 -->
+            <canvas id="form-canvas" width="595" height="842"></canvas>
+          </div>
+        </div>
+
+        <!-- 우측: 검수 폼 -->
+        <div class="form-panel">
+          <div class="form-panel-header">
+            <h2>OCR 결과 검수</h2>
+            <div class="app-meta" id="app-meta"></div>
+          </div>
+
+          <div class="confidence-legend">
+            <div class="legend-item">
+              <div class="legend-dot high"></div>
+              90%↑ 자동 인식 (초록)
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot mid"></div>
+              80-90% 확인 권장 (노랑)
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot low"></div>
+              80%↓ 필수 확인 (빨강) — 체크 필수
+            </div>
+          </div>
+
+          <div class="form-scroll" id="form-scroll">
+            <!-- JS로 렌더링 -->
+          </div>
+
+          <div class="form-panel-footer">
+            <button
+              class="btn btn-success btn-lg"
+              id="save-btn"
+              onclick="saveApplication()"
+              disabled
+            >
+              ✅ 저장하고 다음으로
+            </button>
+            <button class="btn btn-outline" onclick="skipApplication()">
+              건너뛰기
+            </button>
+            <div class="footer-hint" id="save-hint"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 크롭 돋보기 툴팁 -->
+    <div id="crop-tooltip">
+      <div class="tooltip-label">📍 원본 이미지 해당 영역</div>
+      <canvas id="tooltip-canvas"></canvas>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/ocr.js"></script>
+    <script src="js/mock-data.js"></script>
+    <script src="js/imageDB.js"></script>
+    <script src="js/review.js"></script>
+  </body>
+</html>
