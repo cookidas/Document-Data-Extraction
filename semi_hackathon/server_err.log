@@ -1,0 +1,77 @@
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://1.241.186.182:5000
+Press CTRL+C to quit
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 123-216-258
+127.0.0.1 - - [11/Jul/2026 01:36:45] "GET /api/applications HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:14] "POST /api/applications HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jul/2026 01:37:32] "POST /api/applications/APP-TEST-C00/pages/0/image HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:32] "GET /api/applications/APP-TEST-C00/pages/0/image HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:52] "PATCH /api/applications/APP-TEST-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /staff/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /staff/dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /citizen/apply.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /shared/js/config.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /shared/js/api-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /shared/js/sonanong.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /shared/js/ocr-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /shared/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /citizen/js/apply.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:37:53] "GET /citizen/js/steps/intake.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:38:11] "DELETE /api/applications/APP-TEST-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:38:11] "GET /api/trash HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:38:11] "POST /api/trash/APP-TEST-C00/restore HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:38:11] "GET /api/applications HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:15] "DELETE /api/applications/APP-TEST-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:15] "GET /api/trash HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:15] "POST /api/trash/APP-TEST-C00/restore HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:38] "DELETE /api/applications/APP-TEST-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:38] "DELETE /api/trash/APP-TEST-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:38] "GET /api/applications HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:39:38] "GET /api/trash HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /citizen/apply.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /shared/js/config.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /shared/js/ocr-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /citizen/js/steps/intake.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /shared/js/api-client.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /citizen/js/steps/capture.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /shared/js/sonanong.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:34] "GET /citizen/js/steps/eligibility.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:35] "GET /citizen/js/steps/finish.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:35] "GET /citizen/js/apply.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:41:35] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/apply.html HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /shared/js/config.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /shared/js/api-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /shared/js/ocr-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/js/steps/intake.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/js/steps/capture.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /shared/js/sonanong.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/js/steps/eligibility.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/js/steps/finish.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:41:51] "GET /citizen/js/apply.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:23] "POST /api/applications HTTP/1.1" 201 -
+127.0.0.1 - - [11/Jul/2026 01:43:33] "GET /staff/index.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:33] "GET /shared/css/style.css HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:42] "GET /staff/dashboard.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:42] "GET /shared/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /shared/js/config.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /shared/js/sonanong.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /shared/js/api-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /shared/js/ocr-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /staff/js/dashboard.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /api/applications HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:43] "GET /api/trash HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /staff/review.html HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /shared/css/style.css HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /shared/js/config.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /shared/js/sonanong.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /shared/js/ocr-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /shared/js/api-client.js HTTP/1.1" 304 -
+127.0.0.1 - - [11/Jul/2026 01:43:51] "GET /staff/js/review.js HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:52] "GET /api/applications/APP-1783701803518-C00 HTTP/1.1" 200 -
+127.0.0.1 - - [11/Jul/2026 01:43:52] "GET /api/applications/APP-1783701803518-C00/pages/0/image HTTP/1.1" 404 -
+127.0.0.1 - - [11/Jul/2026 01:45:33] "GET /api/applications HTTP/1.1" 200 -

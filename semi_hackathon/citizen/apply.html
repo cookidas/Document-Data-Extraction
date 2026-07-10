@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>화성시 농업 직불금 간편 신청</title>
+  <style>
+    /* 토스 참고 톤: 한 화면 하나의 질문, 카드형 선택지, 초록 테마 (와이어프레임 확정안) */
+    :root {
+      --green: #1F9D57;
+      --green-soft: #E6F7EC;
+      --ink: #191F28;
+      --muted: #8B95A1;
+      --line: #E7EBF0;
+      --card: #F2F4F6;
+      --warn: #B8650B;
+      --warn-soft: #FFF3E2;
+    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: #fff;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    }
+    .wizard {
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      padding: 0 20px;
+    }
+
+    /* 상단: 뒤로가기 + 진행바 */
+    .wiz-top { display: flex; align-items: center; gap: 12px; padding: 14px 0 10px; }
+    .btn-back {
+      border: none; background: none; font-size: 22px; color: var(--muted);
+      cursor: pointer; padding: 4px 8px; margin-left: -8px;
+    }
+    .btn-back:focus-visible { outline: 2px solid var(--green); border-radius: 8px; }
+    .progress { display: flex; gap: 4px; flex: 1; }
+    .progress i { flex: 1; height: 4px; border-radius: 2px; background: var(--line); transition: background .2s; }
+    .progress i.on { background: var(--green); }
+
+    /* 본문 */
+    .step-body { flex: 1; display: flex; flex-direction: column; padding: 10px 0 16px; }
+    .tag {
+      align-self: flex-start; font-size: 13px; font-weight: 700; color: var(--warn);
+      background: var(--warn-soft); padding: 5px 11px; border-radius: 20px; margin-bottom: 14px;
+    }
+    .h1 { font-size: 24px; font-weight: 800; line-height: 1.35; margin: 0 0 8px; letter-spacing: -.01em; text-wrap: balance; }
+    .sub { font-size: 15px; color: var(--muted); line-height: 1.55; margin: 0 0 22px; }
+
+    .tts-row { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--green); margin-bottom: 12px; font-weight: 600; }
+
+    /* 선택지 카드 */
+    .stack { display: flex; flex-direction: column; gap: 10px; }
+    .opt {
+      display: flex; align-items: center; gap: 12px; padding: 18px 16px; border-radius: 16px;
+      background: var(--card); font-size: 17px; font-weight: 600; color: var(--ink);
+      border: 2px solid transparent; cursor: pointer; text-align: left; width: 100%;
+      font-family: inherit; transition: background .12s;
+    }
+    .opt.sel { background: var(--green-soft); color: var(--green); border-color: var(--green); }
+    .opt:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+    .opt .name { display: flex; flex-direction: column; gap: 2px; }
+    .opt .name b { font-size: 17px; }
+    .opt .name span { font-size: 13px; color: var(--muted); font-weight: 500; }
+    .opt .avatar { width: 34px; height: 34px; border-radius: 50%; background: #DCE9DF; flex: none; }
+
+    /* 값 확인 카드 */
+    .valuecard {
+      background: var(--card); border-radius: 16px; padding: 20px; text-align: center;
+      font-size: 24px; font-weight: 800; margin: 6px 0; letter-spacing: .02em;
+      font-variant-numeric: tabular-nums;
+    }
+    .valuecard .k { display: block; font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 6px; }
+    .valuecard input {
+      border: none; background: none; font: inherit; text-align: center; width: 100%;
+      color: var(--ink); outline: none;
+    }
+    .value-hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: 8px; }
+
+    /* 숫자/텍스트 입력 */
+    .biginput {
+      display: flex; align-items: baseline; gap: 8px; background: var(--card);
+      border-radius: 16px; padding: 18px 20px; margin-bottom: 10px;
+    }
+    .biginput input {
+      border: none; background: none; font-size: 26px; font-weight: 800; width: 100%;
+      outline: none; color: var(--ink); font-family: inherit; font-variant-numeric: tabular-nums;
+    }
+    .biginput .unit { font-size: 15px; color: var(--muted); font-weight: 600; flex: none; }
+    .biginput label { font-size: 13px; color: var(--muted); font-weight: 600; flex: none; min-width: 30px; }
+
+    /* 촬영 */
+    .cam-preview {
+      flex: 1; min-height: 220px; border: 2px dashed #C7CDD4; border-radius: 18px;
+      display: flex; align-items: center; justify-content: center; color: #B0B8C1;
+      font-size: 15px; margin-bottom: 16px; overflow: hidden; position: relative;
+    }
+    .cam-preview img { width: 100%; height: 100%; object-fit: contain; }
+    .cam-loading {
+      position: absolute; inset: 0; background: rgba(255,255,255,.88);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700; color: var(--green);
+    }
+
+    /* 예상 지원금 */
+    .bignum { text-align: center; margin: 22px 0 10px; }
+    .bignum .cap { font-size: 15px; color: var(--muted); }
+    .bignum .amt { font-size: 40px; font-weight: 800; color: var(--green); margin: 8px 0; font-variant-numeric: tabular-nums; }
+
+    /* 주의/안내 박스 */
+    .note {
+      font-size: 14px; color: var(--warn); background: var(--warn-soft);
+      border-radius: 12px; padding: 12px 14px; margin-top: 12px; line-height: 1.55;
+    }
+    .note.ok { color: var(--green); background: var(--green-soft); }
+    .warnrow {
+      display: flex; gap: 10px; font-size: 15px; background: #FFF7EC; border-radius: 14px;
+      padding: 14px; line-height: 1.55; color: #7A4A05; margin-bottom: 10px;
+    }
+    .warnrow .ic { flex: none; }
+
+    /* 요약 */
+    .rows { border-top: 1px solid var(--line); margin-top: 6px; }
+    .row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 14px 2px; border-bottom: 1px solid var(--line); font-size: 15px;
+    }
+    .row .k { color: var(--muted); }
+    .row .v { font-weight: 700; max-width: 60%; text-align: right; word-break: break-all; }
+    .row .edit {
+      color: var(--green); font-weight: 700; font-size: 13px; margin-left: 10px;
+      background: none; border: none; cursor: pointer; font-family: inherit; flex: none;
+    }
+
+    /* 버튼 */
+    .spacer { flex: 1; min-height: 18px; }
+    .btn {
+      width: 100%; text-align: center; padding: 17px; border-radius: 16px;
+      background: var(--green); color: #fff; font-weight: 700; font-size: 17px;
+      border: none; cursor: pointer; font-family: inherit;
+    }
+    .btn:disabled { background: #C8D6CD; cursor: default; }
+    .btn.ghost { background: var(--card); color: var(--ink); margin-top: 10px; }
+    .btn:focus-visible { outline: 3px solid var(--green-soft); }
+    .linkrow { display: flex; justify-content: space-between; margin-top: 14px; }
+    .link {
+      font-size: 14px; color: var(--muted); font-weight: 600; background: none;
+      border: none; cursor: pointer; font-family: inherit; padding: 4px;
+    }
+
+    /* 시작/완료 히어로 */
+    .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 16px; }
+    .hero .logo { font-size: 56px; }
+    .hero h1 { font-size: 25px; font-weight: 800; line-height: 1.4; margin: 0; }
+    .hero p { font-size: 15px; color: var(--muted); line-height: 1.6; margin: 0; max-width: 260px; }
+    .check {
+      width: 72px; height: 72px; border-radius: 50%; background: var(--green-soft);
+      color: var(--green); display: flex; align-items: center; justify-content: center; font-size: 36px;
+    }
+    .receipt { font-size: 13px; color: #B0B8C1; font-variant-numeric: tabular-nums; }
+
+    /* 하단 전화 문의 */
+    .call-help {
+      text-align: center; font-size: 14px; color: var(--muted); font-weight: 600;
+      padding: 12px 0 18px; text-decoration: none; display: block;
+    }
+
+    /* 체크리스트 */
+    .checklist .opt { padding: 15px 16px; font-size: 15.5px; }
+    .checklist .box {
+      width: 22px; height: 22px; border-radius: 6px; border: 2px solid #C7CDD4;
+      flex: none; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: #fff;
+    }
+    .checklist .opt.sel .box { border-color: var(--green); background: var(--green); }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wizard">
+    <header class="wiz-top" id="wiz-top" style="display:none;">
+      <button class="btn-back" id="btn-back" onclick="goBack()" aria-label="이전 단계">←</button>
+      <div class="progress" id="progress" aria-hidden="true"></div>
+    </header>
+
+    <main class="step-body" id="step-container"></main>
+
+    <a class="call-help" href="tel:1334">📞 담당자에게 전화 문의 (1334)</a>
+  </div>
+
+  <input type="file" id="camera-input" accept="image/*" capture="environment" style="display:none;">
+
+  <script src="/shared/js/config.js"></script>
+  <script src="/shared/js/ocr-client.js"></script>
+  <script src="/shared/js/sonanong.js"></script>
+  <script src="/shared/js/api-client.js"></script>
+  <script src="js/steps/intake.js"></script>
+  <script src="js/steps/capture.js"></script>
+  <script src="js/steps/eligibility.js"></script>
+  <script src="js/steps/finish.js"></script>
+  <script src="js/apply.js"></script>
+</body>
+</html>
