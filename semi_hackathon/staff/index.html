@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>화성시 농업직불금 자동화 시스템</title>
+  <link rel="stylesheet" href="/shared/css/style.css">
+  <style>
+    .login-hint {
+      margin-top: 16px;
+      padding: 10px 14px;
+      background: var(--gray-50);
+      border: 1px solid var(--gray-200);
+      border-radius: var(--radius);
+      font-size: 11px;
+      color: var(--gray-500);
+      text-align: center;
+    }
+    .login-hint strong { color: var(--primary); }
+    .error-msg {
+      background: var(--danger-light);
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      padding: 10px 14px;
+      border-radius: var(--radius);
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+    .security-note {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page">
+    <div>
+      <div class="login-card">
+        <div class="login-logo">
+          <span class="emblem">🌾</span>
+          <h1>화성시 농업직불금<br>자동화 시스템</h1>
+          <p>Agricultural Direct Payment OCR System</p>
+        </div>
+
+        <div class="error-msg" id="error-msg">
+          아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+
+        <form id="login-form">
+          <div class="form-group">
+            <label class="form-label" for="username">담당자 아이디</label>
+            <input class="form-input" type="text" id="username" placeholder="아이디 입력" autocomplete="username">
+          </div>
+          <div class="form-group" style="margin-bottom:20px;">
+            <label class="form-label" for="password">비밀번호</label>
+            <input class="form-input" type="password" id="password" placeholder="비밀번호 입력" autocomplete="current-password">
+          </div>
+          <button class="btn btn-primary btn-lg" type="submit" style="width:100%;">로그인</button>
+        </form>
+
+        <div class="login-hint">
+          데모 계정: <strong>admin</strong> / <strong>admin1234</strong>
+        </div>
+
+        <a href="/citizen/apply.html" style="display:block;margin-top:14px;text-align:center;
+          font-size:13px;font-weight:600;color:var(--primary);text-decoration:none;">
+          🧑‍🌾 신청인이신가요? 여기서 바로 신청하기 →
+        </a>
+      </div>
+
+      <div class="security-note">
+        🔒 본 시스템은 개인정보보호법에 따라 접근이 통제됩니다
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 이미 로그인된 경우 대시보드로
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+      location.href = 'dashboard.html';
+    }
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const id = document.getElementById('username').value.trim();
+      const pw = document.getElementById('password').value;
+      if (id === 'admin' && pw === 'admin1234') {
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('userName', '김주무관');
+        location.href = 'dashboard.html';
+      } else {
+        document.getElementById('error-msg').classList.add('visible');
+      }
+    });
+  </script>
+</body>
+</html>
