@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request
 
 bp = Blueprint('ocr', __name__, url_prefix='/api')
 
-CLOVA_URL = 'https://45fw7pqzt7.apigw.ntruss.com/custom/v1/54446/86c6eb930b0f6b09d7f7635f42e52fb3dbd5dbdeb15d842c539c83397eca358c/infer'
+CLOVA_URL = '"api key here"'
 
 
 @bp.post('/ocr')
