@@ -1,5 +1,0 @@
-서버 시작: http://localhost:5000
-  담당자: http://localhost:5000/staff/index.html
-  신청자: http://localhost:5000/citizen/apply.html
- * Serving Flask app 'server'
- * Debug mode: on
